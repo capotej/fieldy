@@ -34,6 +34,24 @@ module Fieldy
         @fields << { sym => { :length => length, :type => type }}
       end
 
+
+      def to_sql
+        sql = "create table READER ("
+        fields = []
+        @fields.each do |f|
+          f.each do |k,v|
+            unless k == :null
+              fields << "#{k} varchar(#{v[:length]})"
+            end
+          end
+        end
+        sql + fields.join(",") + ")"
+      end
+
+
+
+
+
       def skip(length)
         self.field(:null, length, "x" )
       end

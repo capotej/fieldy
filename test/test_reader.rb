@@ -18,4 +18,10 @@ class TestReader < Test::Unit::TestCase
     assert_equal a[:first_name], "TESTY"
   end
 
+  def test_sql_output
+    assert_equal ExampleFile.to_sql, "create table READER (first_name varchar(12),last_name varchar(12),grade varchar(2))"
+  end
+
+
+
 end
