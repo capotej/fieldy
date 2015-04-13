@@ -1,30 +1,23 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'fieldy/version'
 
-Gem::Specification.new do |s|
-  s.name = %q{fieldy}
-  s.version = "1.1.0"
+Gem::Specification.new do |spec|
+  spec.name          = "fieldy"
+  spec.version       = Fieldy::VERSION
+  spec.authors       = ["Darren Cauthon"]
+  spec.email         = ["darren@cauthon.com"]
+  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.homepage      = ""
+  spec.license       = "MIT"
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["jcapote"]
-  s.date = %q{2009-04-02}
-  s.description = %q{Declartive DSL for handling fixed width records, read and write with ease}
-  s.email = %q{jcapote@gmail.com}
-  s.extra_rdoc_files = ["README.markdown"]
-  s.files = ["README.markdown", "VERSION.yml", "lib/fieldy.rb", "lib/reader.rb", "lib/writer.rb", "test/fixtures", "test/helper.rb", "test/test_reader.rb", "test/test_writer.rb"]
-  s.has_rdoc = true
-  s.homepage = %q{http://github.com/jcapote/fieldy}
-  s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.1}
-  s.summary = %q{Read and write fixed width record with ease}
+  spec.files         = `git ls-files -z`.split("\x0")
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
 
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 2
-
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-    else
-    end
-  else
-  end
+  spec.add_development_dependency "bundler", "~> 1.7"
+  spec.add_development_dependency "rake", "~> 10.0"
 end
