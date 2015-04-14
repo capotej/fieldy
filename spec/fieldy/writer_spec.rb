@@ -9,6 +9,18 @@ end
 
 describe Fieldy::Writer do
 
+  it "should create attr_accessors for each field" do
+    file = AnotherFile.new
+
+    name = SecureRandom.uuid
+    file.first_name = name
+    file.first_name.must_equal name
+
+    name = SecureRandom.uuid
+    file.last_name = name
+    file.last_name.must_equal name
+  end
+
   describe "writing a file" do
 
     it "should have the proper length" do
