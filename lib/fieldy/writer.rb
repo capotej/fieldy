@@ -21,13 +21,13 @@ module Fieldy
     module WriterMethods
 
       def write(hash)
-        res = []
-        @fields.each do |f|
-          f.map  { |f| f[0] }
-           .each { |k| hash.map  { |x| x[1] }
-                           .each { |v| res << (k == :null ? ' ' : v) }
-                 }
-        end
+        res = @fields.reduce([]) do |res, f|
+                f.map  { |f| f[0] }
+                 .each { |k| hash.map  { |x| x[1] }
+                                 .each { |v| res << (k == :null ? ' ' : v) }
+                       }
+                res
+              end
         pack = @fields.map { |f| f.values[0] }
                       .map { |v| "#{v[:type]}#{v[:length]}" }
                       .join('')
