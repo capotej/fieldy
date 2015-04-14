@@ -18,4 +18,17 @@ describe Fieldy::Writer do
 
   end
 
+  describe "writing an instance of a file" do
+
+    it "should return the full line" do
+
+      file = AnotherFile.new.tap do |f|
+               f.first_name = 'test1'
+               f.last_name  = 'test2'
+             end
+      file.write.must_equal('test1 test2 ') 
+    end
+
+  end
+
 end

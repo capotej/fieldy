@@ -4,8 +4,14 @@ module Fieldy
 
     def self.included(base)
       base.extend(WriterMethods)
+      base.send :include, InstanceMethods
     end
       
+    module InstanceMethods
+      def write
+        ''
+      end
+    end
 
     module WriterMethods
       
