@@ -34,6 +34,7 @@ module Fieldy
       def field(sym, length, type = "A")
         @fields ||= []
         @fields << { sym => { :length => length, :type => type }}
+        self.send(:attr_accessor, sym)
       end
       
       def skip(length)
