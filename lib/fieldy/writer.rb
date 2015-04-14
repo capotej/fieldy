@@ -25,13 +25,7 @@ module Fieldy
         pack_str = ""
         @fields.each do |h|
           h.each do |k,v|
-            hash.each do |x,y|
-              if k == :null
-                res << ' '
-              else
-                res << y
-              end
-            end
+            hash.each { |x, y| res << (k == :null ? ' ' : y) }
           pack_str << "#{v[:type]}#{v[:length]}"
           end
         end
