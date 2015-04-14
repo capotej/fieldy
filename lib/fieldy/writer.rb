@@ -9,7 +9,7 @@ module Fieldy
 
     module InstanceMethods
 
-      def write
+      def to_s
         data = self.class.fields
                          .map        { |x| x[:key] }
                          .select     { |x| x }

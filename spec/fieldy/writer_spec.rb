@@ -38,7 +38,7 @@ describe Fieldy::Writer do
 
   end
 
-  describe "writing an instance of a file" do
+  describe "to_s" do
 
     it "should return the full line" do
 
@@ -46,7 +46,7 @@ describe Fieldy::Writer do
                f.first_name = 'test'
                f.last_name  = 'test2'
              end
-      file.write.must_equal('test test2') 
+      file.to_s.must_equal('test test2') 
     end
 
   end
@@ -54,7 +54,7 @@ describe Fieldy::Writer do
   describe "skipping" do
     it "should return the appropriate number of spaces" do
       writer = AWriterWithASkip.new
-      writer.write.must_equal "                              "
+      writer.to_s.must_equal "                              "
     end
   end
 
