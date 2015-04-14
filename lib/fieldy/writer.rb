@@ -22,9 +22,9 @@ module Fieldy
 
       def write(hash)
         res = []
-        @fields.each do |h|
-          h.each do |k,v|
-            hash.each { |x, y| res << (k == :null ? ' ' : y) }
+        @fields.each do |f|
+          f.each do |k, _|
+            hash.each { |_, y| res << (k == :null ? ' ' : y) }
           end
         end
         pack = @fields.map { |f| f.values[0] }
