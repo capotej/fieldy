@@ -8,6 +8,7 @@ module Fieldy
     end
 
     module InstanceMethods
+
       def write
         fields = self.class.fields
         data = fields.map        { |x| x[:key] }
@@ -15,6 +16,7 @@ module Fieldy
                      .reduce({}) { |x, key| x.merge! key => self.send(key) }
         self.class.write data
       end
+
     end
 
     module WriterMethods
@@ -38,9 +40,9 @@ module Fieldy
       def skip(length)
         self.field(nil, length, "A" )
       end
+
     end
 
   end
 
 end
-
