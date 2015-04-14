@@ -22,11 +22,13 @@ module Fieldy
 
       def write(hash)
         res = @fields.reduce([]) do |res, f|
-                f.map  { |f| f[0] }
-                 .each { |k| hash.map  { |x| x[1] }
-                                 .each { |v| res << (k == :null ? ' ' : v) }
-                       }
-                res
+                res.tap do |res|
+                  f.map  { |f| f[0] }
+                   .each { |k| hash.map  { |x| x[1] }
+                                   .map  { |v| (k == :null ? ' ' : v) }
+                                   .each { |v| res << v }
+                         }
+                end
               end
         pack = @fields.map { |f| f.values[0] }
                       .map { |v| "#{v[:type]}#{v[:length]}" }
