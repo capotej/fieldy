@@ -9,7 +9,7 @@ module Fieldy
 
     module InstanceMethods
       def write
-        fields = self.class.instance_eval { @fields }
+        fields = self.class.fields
         data = fields.map        { |x| x[:key] }
                      .select     { |x| x }
                      .reduce({}) { |x, key| x.merge! key => self.send(key) }
@@ -20,15 +20,18 @@ module Fieldy
     module WriterMethods
 
       def write(hash)
-        values  = @fields.map { |x| x[:key] }.map { |x| hash[x] || '' }
-        pack    = @fields.map { |x| "#{x[:type]}#{x[:length]}" }.join ''
+        values  = fields.map { |x| x[:key] }.map { |x| hash[x] || '' }
+        pack    = fields.map { |x| "#{x[:type]}#{x[:length]}" }.join ''
 
         values.pack pack
       end
 
-      def field(sym, length, type = "A")
+      def fields
         @fields ||= []
-        @fields << { key: sym, :length => length, :type => type }
+      end
+
+      def field(sym, length, type = "A")
+        fields << { key: sym, :length => length, :type => type }
         self.send(:attr_accessor, sym) if sym
       end
 
