@@ -24,7 +24,7 @@ module Fieldy
         res = @fields.reduce([]) do |res, f|
                 res + f.flat_map  { |f| f[0] }
                        .flat_map { |k| hash.map  { |x| x[1] }
-                                           .map  { |v| (k == :null ? ' ' : v) }
+                                           .map  { |x| (k == :null ? '' : x) }
                                  }
               end
         pack = @fields.map { |f| f.values[0] }
