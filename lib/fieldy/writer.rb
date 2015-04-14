@@ -21,8 +21,7 @@ module Fieldy
 
       def write(hash)
         res = @fields.reduce([]) do |res, f|
-                res + f.map      { |f| f[0] }
-                       .flat_map { |_| hash.values.map { |x| x || '' } }
+                res + f.flat_map { |_| hash.values.map { |x| x || '' } }
               end
         pack = @fields.map { |f| f.values[0] }
                       .map { |v| "#{v[:type]}#{v[:length]}" }
