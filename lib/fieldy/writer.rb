@@ -9,7 +9,12 @@ module Fieldy
       
     module InstanceMethods
       def write
-        ''
+        fields = self.class.instance_eval { @fields }
+        data = fields.reduce({}) do |t, i|
+                 key = i.keys.first
+                 t.merge!(key => self.send(key))
+               end
+        self.class.write data
       end
     end
 
