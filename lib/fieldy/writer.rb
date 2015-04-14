@@ -10,10 +10,10 @@ module Fieldy
     module InstanceMethods
 
       def write
-        fields = self.class.fields
-        data = fields.map        { |x| x[:key] }
-                     .select     { |x| x }
-                     .reduce({}) { |x, key| x.merge! key => self.send(key) }
+        data = self.class.fields
+                         .map        { |x| x[:key] }
+                         .select     { |x| x }
+                         .reduce({}) { |x, k| x.merge! k => self.send(k) }
         self.class.write data
       end
 
