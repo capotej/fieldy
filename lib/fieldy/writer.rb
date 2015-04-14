@@ -24,7 +24,7 @@ module Fieldy
         res = []
         @fields.each do |f|
           f.each do |k, _|
-            hash.each { |_, y| res << (k == :null ? ' ' : y) }
+            hash.map { |x| x[1] }.each { |y| res << (k == :null ? ' ' : y) }
           end
         end
         pack = @fields.map { |f| f.values[0] }
