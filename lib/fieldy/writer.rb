@@ -26,7 +26,9 @@ module Fieldy
         @fields.each do |h|
           h.each do |k,v|
             hash.each do |x,y|
-              unless k == :null
+              if k == :null
+                res << ' '
+              else
                 res << y
               end
             end
@@ -43,7 +45,7 @@ module Fieldy
       end
       
       def skip(length)
-        self.field(:null, length, "x" )
+        self.field(:null, length, "A" )
       end
     end
     

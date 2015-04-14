@@ -7,6 +7,14 @@ class AnotherFile
   field :last_name, 5
 end
 
+class AWriterWithASkip
+  include Fieldy::Writer
+
+  field :first_name, 5
+  skip 20
+  field :last_name, 5
+end
+
 describe Fieldy::Writer do
 
   it "should create attr_accessors for each field" do
@@ -41,6 +49,13 @@ describe Fieldy::Writer do
       file.write.must_equal('test test2') 
     end
 
+  end
+
+  describe "skipping" do
+    it "should return the appropriate number of spaces" do
+      writer = AWriterWithASkip.new
+      writer.write.must_equal "                              "
+    end
   end
 
 end
