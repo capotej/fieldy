@@ -6,7 +6,7 @@ module Fieldy
       base.extend(WriterMethods)
       base.send :include, InstanceMethods
     end
-      
+
     module InstanceMethods
       def write
         fields = self.class.instance_eval { @fields }
@@ -19,7 +19,7 @@ module Fieldy
     end
 
     module WriterMethods
-      
+
       def write(hash)
         res = []
         pack_str = ""
@@ -37,19 +37,19 @@ module Fieldy
         end
         res.pack(pack_str)
       end
-      
+
       def field(sym, length, type = "A")
         @fields ||= []
         @fields << { sym => { :length => length, :type => type }}
         self.send(:attr_accessor, sym)
       end
-      
+
       def skip(length)
         self.field(:null, length, "A" )
       end
     end
-    
+
   end
-    
+
 end
 
