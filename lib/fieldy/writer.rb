@@ -22,17 +22,14 @@ module Fieldy
 
       def write(hash)
         res = []
-        pack_str = ""
         @fields.each do |h|
           h.each do |k,v|
             hash.each { |x, y| res << (k == :null ? ' ' : y) }
           end
         end
-        @fields.each do |h|
-          h.each do |k,v|
-            pack_str << "#{v[:type]}#{v[:length]}"
-          end
-        end
+        pack_str = @fields.map do |h|
+                     h.map { |k,v| "#{v[:type]}#{v[:length]}" }
+                   end.join ('')
         res.pack(pack_str)
       end
 
