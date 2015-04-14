@@ -27,8 +27,8 @@ module Fieldy
             hash.each { |x, y| res << (k == :null ? ' ' : y) }
           end
         end
-        pack_str = @fields.map do |h|
-                     h.map { |k,v| "#{v[:type]}#{v[:length]}" }
+        pack_str = @fields.map do |f|
+                     f.map { |_, v| "#{v[:type]}#{v[:length]}" }
                    end.join ('')
         res.pack(pack_str)
       end
