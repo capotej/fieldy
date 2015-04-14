@@ -20,10 +20,9 @@ module Fieldy
     module WriterMethods
 
       def write(hash)
-        values  = @fields.map { |x| x[:key] }
-                         .map { |f| hash[f] || '' }
-        pack    = @fields.map { |v| "#{v[:type]}#{v[:length]}" }
-                         .join('')
+        values  = @fields.map { |x| x[:key] }.map { |x| hash[x] || '' }
+        pack    = @fields.map { |x| "#{x[:type]}#{x[:length]}" }.join ''
+
         values.pack pack
       end
 
