@@ -26,7 +26,11 @@ module Fieldy
         @fields.each do |h|
           h.each do |k,v|
             hash.each { |x, y| res << (k == :null ? ' ' : y) }
-          pack_str << "#{v[:type]}#{v[:length]}"
+          end
+        end
+        @fields.each do |h|
+          h.each do |k,v|
+            pack_str << "#{v[:type]}#{v[:length]}"
           end
         end
         res.pack(pack_str)
