@@ -22,7 +22,7 @@ module Fieldy
       def write(hash)
         res = @fields.reduce([]) do |res, f|
                 res + f.map  { |f| f[0] }
-                       .flat_map { |k| hash.map  { |x| x[1] }
+                       .flat_map { |k| hash.values
                                            .map  { |x| (k.nil? ? '' : x) }
                                  }
               end
