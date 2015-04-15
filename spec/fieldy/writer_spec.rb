@@ -15,6 +15,13 @@ class AWriterWithASkip
   field :last_name, 5
 end
 
+class AWriterWithAHardcodedValue
+  include Fieldy::Writer
+  field :first_name, 5
+  hardcode "abcdefg"
+  field :last_name, 5
+end
+
 describe Fieldy::Writer do
 
   it "should create attr_accessors for each field" do
@@ -58,6 +65,12 @@ describe Fieldy::Writer do
     end
   end
 
+  describe "hardcoded values" do
+    it "should hardcode the value" do
+      AWriterWithAHardcodedValue.new.to_s.must_equal "     abcdefg     "
+    end
+  end
+
   describe "fields" do
 
     it "should contain a record for each field" do
@@ -67,7 +80,7 @@ describe Fieldy::Writer do
         fields[0][:length].must_equal 5
         fields[1][:key].must_equal :last_name
         fields[1][:length].must_equal 5
-        fields.each { |f| f[:type].must_equal 'A' }
+        fields.each { |f| f[:type].nil?.must_equal true }
       end
 
       AWriterWithASkip.fields.tap do |fields|
@@ -77,7 +90,7 @@ describe Fieldy::Writer do
         fields[1][:length].must_equal 20
         fields[2][:key].must_equal :last_name
         fields[2][:length].must_equal 5
-        fields.each { |f| f[:type].must_equal 'A' }
+        fields.each { |f| f[:type].nil?.must_equal true }
       end
         
     end

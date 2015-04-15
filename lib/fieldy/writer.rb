@@ -21,9 +21,10 @@ module Fieldy
 
     module WriterMethods
 
-      def write(hash)
-        values  = fields.map { |x| x[:key] }.map { |x| hash[x] || '' }
-        pack    = fields.map { |x| "#{x[:type]}#{x[:length]}" }.join ''
+      def write hash
+        values  = fields.map { |x| [x[:key], x[:value]] }
+                        .map { |x| x[1] || hash[x[0]] || '' }
+        pack    = fields.map { |x| "A#{x[:length]}" }.join ''
 
         values.pack pack
       end
@@ -32,14 +33,18 @@ module Fieldy
         @fields ||= []
       end
 
-      def field(sym, length, type = "A")
+      def field(sym, length, options = {})
         starts_at = fields.reduce(0) { |t, i| t + i[:length] }
-        fields << { key: sym, length: length, starts_at: starts_at, type: type }
+        fields << { key: sym, length: length, starts_at: starts_at }.merge(options)
         self.send(:attr_accessor, sym) if sym
       end
 
       def skip(length)
-        self.field(nil, length, "A" )
+        self.field(nil, length)
+      end
+
+      def hardcode(value)
+        self.field(nil, value.length, { value: value } )
       end
 
     end
