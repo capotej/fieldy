@@ -75,6 +75,13 @@ describe Fieldy::Writer do
 
   end
 
+  describe "converting values to strings" do
+    it "should convert the value to strings" do
+      a = AnotherFile.write(:first_name => 1)
+      a.must_equal '1         '
+    end
+  end
+
   describe "to_s" do
 
     it "should return the full line" do
