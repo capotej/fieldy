@@ -22,7 +22,7 @@ module Fieldy
     module WriterMethods
 
       def write hash
-        values  = fields.map { |x| (x[:value] || hash[x[:key]] || '') + (x[:fill] ? x[:fill] * x[:length] : '') }
+        values  = fields.map { |x| (x[:value] || hash[x[:key]] || '') + ((x[:fill_with] || '') * x[:length]) }
         pack    = fields.map { |x| "A#{x[:length]}" }.join ''
 
         values.pack pack

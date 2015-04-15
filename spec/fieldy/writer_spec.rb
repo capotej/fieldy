@@ -25,7 +25,7 @@ end
 class AWriterWithAFillValue
   include Fieldy::Writer
   field :first_name, 5
-  skip 5, fill: '*'
+  skip 5, fill_with: '*'
   field :last_name, 5
 end
 
