@@ -33,7 +33,8 @@ module Fieldy
       end
 
       def field(sym, length, type = "A")
-        fields << { key: sym, :length => length, :type => type }
+        starts_at = fields.reduce(0) { |t, i| t + i[:length] }
+        fields << { key: sym, :length => length, starts_at: starts_at, :type => type }
         self.send(:attr_accessor, sym) if sym
       end
 

@@ -82,6 +82,25 @@ describe Fieldy::Writer do
         
     end
 
+    describe "incrementing the start_at for each field" do
+
+      it "should use start_at to record the starting point of each field" do
+
+        AnotherFile.fields.tap do |fields|
+          fields[0][:starts_at].must_equal 0
+          fields[1][:starts_at].must_equal 5
+        end
+
+        AWriterWithASkip.fields.tap do |fields|
+          fields[0][:starts_at].must_equal 0
+          fields[1][:starts_at].must_equal 5
+          fields[2][:starts_at].must_equal 25
+        end
+
+      end
+
+    end
+
   end
 
 end
