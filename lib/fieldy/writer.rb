@@ -22,8 +22,17 @@ module Fieldy
     module WriterMethods
 
       def write hash
-        values  = fields.map { |x| (x[:value] || hash[x[:key]] || '') + ((x[:fill_with] || '') * x[:length]) }
-        pack    = fields.map { |x| "A#{x[:length]}" }.join ''
+        values  = fields.map  { |x| { field: x, computed_value: (x[:value] || hash[x[:key]] || '') + ((x[:fill_with] || '') * x[:length]) } }
+                        .each do |x|
+                                if x[:field][:justify] == :right
+                                  length = x[:field][:length] - x[:computed_value].length
+                                  if length > 0
+                                    x[:computed_value] = "#{' ' * length}#{x[:computed_value]}"
+                                  end
+                                end
+                              end
+                       .map { |x| x[:computed_value] }
+        pack    = fields.map  { |x| "A#{x[:length]}" }.join ''
 
         values.pack pack
       end

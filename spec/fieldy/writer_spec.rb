@@ -29,6 +29,12 @@ class AWriterWithAFillValue
   field :last_name, 5
 end
 
+class AWriterWithRightJustification
+  include Fieldy::Writer
+  field :first_name, 10, justify: :right
+  field :last_name,  10, justify: :right
+end
+
 describe Fieldy::Writer do
 
   it "should create attr_accessors for each field" do
@@ -63,6 +69,16 @@ describe Fieldy::Writer do
       file.to_s.must_equal('test test2') 
     end
 
+  end
+
+  describe "justification" do
+    it "should allow right justification" do
+      file = AWriterWithRightJustification.new.tap do |f|
+               f.first_name = 'John'
+               f.last_name  = 'Galt'
+             end
+      file.to_s.must_equal '      John      Galt'
+    end
   end
 
   describe "skipping" do
