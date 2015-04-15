@@ -58,4 +58,30 @@ describe Fieldy::Writer do
     end
   end
 
+  describe "fields" do
+
+    it "should contain a record for each field" do
+      AnotherFile.fields.tap do |fields|
+        fields.count.must_equal 2
+        fields[0][:key].must_equal :first_name
+        fields[0][:length].must_equal 5
+        fields[1][:key].must_equal :last_name
+        fields[1][:length].must_equal 5
+        fields.each { |f| f[:type].must_equal 'A' }
+      end
+
+      AWriterWithASkip.fields.tap do |fields|
+        fields.count.must_equal 3
+        fields[0][:key].must_equal :first_name
+        fields[1][:key].must_equal nil
+        fields[1][:length].must_equal 20
+        fields[2][:key].must_equal :last_name
+        fields[2][:length].must_equal 5
+        fields.each { |f| f[:type].must_equal 'A' }
+      end
+        
+    end
+
+  end
+
 end
