@@ -7,7 +7,7 @@ module Fieldy
       base.send :include, InstanceMethods
     end
 
-    def self.register_type meth, *_, &blk
+    def self.register_method meth, *_, &blk
       WriterMethods.send(:define_method, meth, &blk)
     end
 
@@ -54,15 +54,15 @@ module Fieldy
 
   end
 
-  Writer.register_type(:hardcode) do |value|
+  Writer.register_method(:hardcode) do |value|
     self.field(nil, value.length, { value: value } )
   end
 
-  Writer.register_type(:skip) do |length, options={}|
+  Writer.register_method(:skip) do |length, options={}|
     self.field(nil, length, options)
   end
 
-  Writer.register_type(:field) do |sym, length, options={}|
+  Writer.register_method(:field) do |sym, length, options={}|
     starts_at = fields.reduce(0) { |t, i| t + i[:length] }
     fields << { key: sym, length: length, starts_at: starts_at }.merge(options)
     self.send(:attr_accessor, sym) if sym
