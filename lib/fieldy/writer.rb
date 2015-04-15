@@ -22,12 +22,17 @@ module Fieldy
     module WriterMethods
 
       def write hash
-        values  = fields.map  { |x| { field: x, computed_value: (x[:value] || hash[x[:key]] || '') + ((x[:fill_with] || '') * x[:length]) } }
+        values  = fields.map  { |x| { field: x, computed_value: (x[:value] || hash[x[:key]] || '') } }
+                        .each do |x|
+                                if x[:field][:justify] != :right
+                                  x[:computed_value] += ((x[:field][:fill_with] || '') * x[:field][:length])
+                                end
+                              end
                         .each do |x|
                                 if x[:field][:justify] == :right
                                   length = x[:field][:length] - x[:computed_value].length
                                   if length > 0
-                                    x[:computed_value] = "#{' ' * length}#{x[:computed_value]}"
+                                    x[:computed_value] = "#{(x[:field][:fill_with] || ' ') * length}#{x[:computed_value]}"
                                   end
                                 end
                               end
