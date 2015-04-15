@@ -22,7 +22,7 @@ module Fieldy
     module WriterMethods
 
       def write hash
-        values  = fields.map { |x| x[:value] || hash[x[:key]] || '' }
+        values  = fields.map { |x| (x[:value] || hash[x[:key]] || '') + (x[:fill] ? x[:fill] * x[:length] : '') }
         pack    = fields.map { |x| "A#{x[:length]}" }.join ''
 
         values.pack pack
@@ -38,8 +38,8 @@ module Fieldy
         self.send(:attr_accessor, sym) if sym
       end
 
-      def skip(length)
-        self.field(nil, length)
+      def skip(length, options = {})
+        self.field(nil, length, options)
       end
 
       def hardcode(value)

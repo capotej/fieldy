@@ -22,6 +22,13 @@ class AWriterWithAHardcodedValue
   field :last_name, 5
 end
 
+class AWriterWithAFillValue
+  include Fieldy::Writer
+  field :first_name, 5
+  skip 5, fill: '*'
+  field :last_name, 5
+end
+
 describe Fieldy::Writer do
 
   it "should create attr_accessors for each field" do
@@ -62,6 +69,11 @@ describe Fieldy::Writer do
     it "should return the appropriate number of spaces" do
       writer = AWriterWithASkip.new
       writer.to_s.must_equal "                              "
+    end
+
+    it "should allow for a different fill value" do
+      writer = AWriterWithAFillValue.new
+      writer.to_s.must_equal '     *****     '
     end
   end
 
