@@ -55,6 +55,17 @@ describe Fieldy::Writer do
     file.last_name.must_equal name
   end
 
+  describe "registered methods" do
+    it "should include the basic methods supported out-of-the-box" do
+      Fieldy::Writer.registered_methods.tap do |methods|
+        methods.count.must_equal 3
+        methods.keys.include?(:hardcode).must_equal true
+        methods.keys.include?(:skip).must_equal true
+        methods.keys.include?(:field).must_equal true
+      end
+    end
+  end
+
   describe "writing a file" do
 
     it "should have the proper length" do

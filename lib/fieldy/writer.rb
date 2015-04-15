@@ -7,7 +7,12 @@ module Fieldy
       base.send :include, InstanceMethods
     end
 
+    def self.registered_methods
+      @registered_methods ||= {}
+    end
+
     def self.register_method meth, *_, &blk
+      registered_methods[meth] = blk
       WriterMethods.send(:define_method, meth, &blk)
     end
 
