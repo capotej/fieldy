@@ -31,12 +31,13 @@ module Fieldy
     module WriterMethods
 
       def write hash
-        values  = fields.map  { |x| { field: x, computed_value: (x[:value] || hash[x[:key]].to_s || '') } }
+        values  = fields.map  { |x| { field: x, computed_value: (x[:value] || hash[x[:key]] || '') } }
                         .each do |x|
                                 if x[:field][:write]
                                   x[:computed_value] = x[:field][:write].call x[:computed_value]
                                 end
                               end
+                        .each { |x| x[:computed_value] = x[:computed_value].to_s }
                         .each do |x|
                                 if x[:field][:justify] != :right
                                   x[:computed_value] += ((x[:field][:fill_with] || '') * x[:field][:length])

@@ -141,7 +141,6 @@ describe Fieldy::Writer do
       writer = AWriterWithASpecialWrite.new
       writer.name = 'x'
       writer.to_s.must_equal 'xx        '
-        
     end
   end
 
