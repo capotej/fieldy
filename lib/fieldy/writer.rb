@@ -33,6 +33,11 @@ module Fieldy
       def write hash
         values  = fields.map  { |x| { field: x, computed_value: (x[:value] || hash[x[:key]].to_s || '') } }
                         .each do |x|
+                                if x[:field][:write]
+                                  x[:computed_value] = x[:field][:write].call x[:computed_value]
+                                end
+                              end
+                        .each do |x|
                                 if x[:field][:justify] != :right
                                   x[:computed_value] += ((x[:field][:fill_with] || '') * x[:field][:length])
                                 end

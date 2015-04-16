@@ -41,6 +41,11 @@ class AWriterWithRightJustificationAndFill
   field :last_name,  10, { justify: :right, fill_with: '-' }
 end
 
+class AWriterWithASpecialWrite
+  include Fieldy::Writer
+  field :name, 10, { write: ->(x) { x * 2 } }
+end
+
 describe Fieldy::Writer do
 
   it "should create attr_accessors for each field" do
@@ -128,6 +133,15 @@ describe Fieldy::Writer do
   describe "hardcoded values" do
     it "should hardcode the value" do
       AWriterWithAHardcodedValue.new.to_s.must_equal "     abcdefg     "
+    end
+  end
+
+  describe "providing a way to write the string" do
+    it "should use the method provided" do
+      writer = AWriterWithASpecialWrite.new
+      writer.name = 'x'
+      writer.to_s.must_equal 'xx        '
+        
     end
   end
 
